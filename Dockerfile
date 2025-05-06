@@ -6,3 +6,12 @@ RUN apt update
 RUN apt upgrade -y
 
 RUN apt install net-tools dnsutils iputils-ping -y
+
+RUN apt install openssh-server -y
+#Adicionar usuario e mudar senha
+RUN useradd -m redes
+RUN echo "redes:redes"|chpasswd
+
+#Mantem o terminal rodando (nginx mostraria os logs)
+#CMD ["/usr/bin/tail", "-f", "/dev/null"]
+CMD ("sh", "-c", "service ssh start; tail -f /dev/null")
